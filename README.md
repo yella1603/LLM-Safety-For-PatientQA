@@ -18,7 +18,7 @@ Please download the following datasets manually from their respective repositori
 2. **MedQuAD Dataset - CDC QA**  
    - GitHub: [MedQuAD - CDC QA](https://github.com/abachaa/MedQuAD/tree/master/9_CDC_QA)
 
-Make sure to place the downloaded datasets into their respective directories before proceeding to the next steps:
+Make sure to place the downloaded datasets into their respective directories before proceeding to the next steps. Current files are placeholders.
 ```bash
 /data
 ```
@@ -28,7 +28,6 @@ The column header for the answers should be "answer" and for the questions "ques
 ## Code Execution Steps
 
 ### Step 2: Rephrase Questions
-There are two approaches to rephrasing questions in this repository: the **1-prompt approach** and the **5-prompt approach**. 
 
 To run 1P, use the following script:
 
@@ -45,17 +44,6 @@ python rephrase/5P_rephrase.py <dataset>
 Where `<dataset>` is:
 - `T` for the TREC LiveQA dataset.
 - `M` for the MedQuAD dataset.
-
-
-#### Input Format
-The input for both `1P_rephrase.py` and `5P_rephrase.py` should be in CSV format. The input CSV file must have a column labeled `question` containing the questions to be rephrased.
-
-- `original`: The original question.
-- `v1`: Rephrased version 1.
-- `v2`: Rephrased version 2.
-- `v3`: Rephrased version 3.
-- `v4`: Rephrased version 4.
-- `v5`: Rephrased version 5.
 
 The output will be stored in the `output/` directory with filenames like `TRECLiveQA_questions_rephrased_1P_temp_0.3.csv` or `MedQuAD_questions_rephrased_5P_temp_0.4.csv`, depending on the dataset and temperature.
 
@@ -113,48 +101,33 @@ To run the models, use the following commands:
 ### Output
 Each script will generate an output CSV file named according to the model and temperature, e.g., `Meta-Llama-3-70B_temp_0.3.csv` or `medalpaca_temp_0.5.csv`. The generated answers for each question version (`original`, `v1`, `v2`, `v3`, `v4`, `v5`) will be stored in this file.
 
----
 
 ## Benchmark
 
 ### Running Benchmark Scripts
-Two benchmark scripts are provided to calculate and evaluate the similarity between the original and rephrased questions, as well as the model-generated answers. 
 
 **varscores_answers.py**: Used to benchmark answers from the models.
 
 1. **varscores_answers.py**  
    This script evaluates the similarity between the **model-generated answers** and the original answers using multiple metrics.
-
-   #### Usage:
+   
    ```bash
    python benchmark/varscores_answers.py [TREC|MedQuAD] [temperature]
    ```
 
    - The script accepts two arguments: the dataset (`TREC` or `MedQuAD`) and the temperature for text generation.
-   - It processes all the model-generated answers for the given dataset and temperature, and evaluates them against the original answers provided in the corresponding dataset.
-
-   Example for TREC dataset at temperature 0.1:
-   ```bash
-   python benchmark/varscores_answers.py TREC 0.1
-   ```
 
 **varscores_questions.py**: Used to benchmark the rephrases of Meta-Llama-3.
 
 2. **varscores_questions.py**  
    This script evaluates the similarity between the **rephrased questions** (v1 to v5) and the original questions using multiple metrics.
 
-   #### Usage:
    ```bash
    python benchmark/varscores_questions.py [TREC|MedQuAD] [temperature]
    ```
 
    - The script accepts two arguments: the dataset (`TREC` or `MedQuAD`) and the temperature for text generation.
 
-### Input and Output
 Both benchmark scripts expect the input files to be present in the `../output/answer_results` directory, with names formatted as follows:
 - For answers: `TREC_{modelname}_temp_{temp}.csv` or `MedQuAD_{modelname}_temp_{temp}.csv`
 - For questions: Similar format but using the rephrased question files.
-
-The output of the benchmark scripts will be two CSV files (mean and standard deviation of the metrics) saved in the same directory. Example output files:
-- `COMBINED_all_models_metrics_comparisons_mean_temp_0.1.csv`
-- `COMBINED_all_models_metrics_comparisons_std_temp_0.1.csv`
