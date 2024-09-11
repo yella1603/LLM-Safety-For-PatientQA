@@ -23,8 +23,6 @@ The clinical domain texts are from MIMIC-III [10] and MIMIC-IV [11]."
 
 print("Starting script...")
 
-
-# model_id = 'local/scratch/cfensor/patientFacing/physionet.org/files/me-llama/1.0.0/MeLLaMA-13B-chat'
 model_id = 'physionet.org/files/me-llama/1.0.0/MeLLaMA-70B-chat'
 
 

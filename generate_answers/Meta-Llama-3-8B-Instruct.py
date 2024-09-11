@@ -19,7 +19,7 @@ def main(input_dataset, temperature):
         bnb_4bit_compute_dtype=bfloat16
     )
 
-    hf_auth = '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'
+    hf_auth = ''
 
     model_config = transformers.AutoConfig.from_pretrained(
         model_id,
