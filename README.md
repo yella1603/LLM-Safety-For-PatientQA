@@ -1,6 +1,6 @@
 # Evaluating Safety of Large Language Models for Patient-facing Medical Question Answering
 
-This repository contains the code and instructions to reproduce the experiments presented in the paper "Evaluating Safety of Large Language Models for Patient-facing Medical Question Answering."
+Supplemental code: "Evaluating Safety of Large Language Models for Patient-facing Medical Question Answering."
 
 ## Requirements
 The required packages to run this code are listed in:
