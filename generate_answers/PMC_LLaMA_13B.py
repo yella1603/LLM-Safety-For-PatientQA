@@ -38,12 +38,12 @@ def main(input_dataset, temperature):
     )
 
     if input_dataset == "TREC":
-        input_file = '../data/TRECLiveQA.csv'
+        input_file = '../output/rephrase_results/combined_rephrased_TREC_temp_0.6.csv'
     elif input_dataset == "medquad":
-        input_file = '../data/MedQuAD.csv'
+        input_file = '../output/rephrase_results/combined_rephrased_MedQuAD_temp_0.6.csv'
     else:
         raise ValueError("Invalid input dataset. Choose 'TREC' or 'medquad'.")
-
+    
     output_file = f'PMC_llama13b_temp_{temperature}.csv'
     
     generate_text = transformers.pipeline(

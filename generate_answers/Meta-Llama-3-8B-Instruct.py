@@ -43,9 +43,9 @@ def main(input_dataset, temperature):
 
     # Select dataset based on input argument
     if input_dataset == "TREC":
-        questions_df = pd.read_csv('../data/TRECLiveQA.csv')
+        questions_df = pd.read_csv('../output/rephrase_results/combined_rephrased_TREC_temp_0.6.csv')
     elif input_dataset == "medquad":
-        questions_df = pd.read_csv('../data/MedQuAD.csv')
+        questions_df = pd.read_csv('../output/rephrase_results/combined_rephrased_MedQuAD_temp_0.6.csv')
     else:
         raise ValueError("Invalid input dataset. Choose 'TREC' or 'medquad'.")
 

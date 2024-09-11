@@ -39,9 +39,9 @@ def main(input_dataset, temperature):
 
     # Select dataset based on input argument
     if input_dataset == "TREC":
-        input_file = '../data/TRECLiveQA.csv'
+        input_file = '../output/rephrase_results/combined_rephrased_TREC_temp_0.6.csv'
     elif input_dataset == "medquad":
-        input_file = '../data/MedQuAD.csv'
+        input_file = '../output/rephrase_results/combined_rephrased_MedQuAD_temp_0.6.csv'
     else:
         raise ValueError("Invalid input dataset. Choose 'TREC' or 'medquad'.")
 

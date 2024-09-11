@@ -76,9 +76,11 @@ print(f"Model loaded on {device}")
 # Define the input and output file paths
 input_file = ""
 if dataset_prefix == "TREC": 
-    input_file = 'FINAL_questions_rephrased_temp_0.6.csv'
+    input_file = '../output/rephrase_results/combined_rephrased_TREC_temp_0.6.csv'
 elif dataset_prefix == "medquad":
-    input_file = 'questions_rephrased_temp_0.6.csv'
+    input_file = '../output/rephrase_results/combined_rephrased_MedQuAD_temp_0.6.csv'
+
+    
 
 # "TREC": 'FINAL_questions_rephrased_temp_0.6.csv' (note, in /final_outputs/rephrased_questions/)
 # "medquad": 'questions_rephrased_temp_0.6.csv' (note, in MedQUAD_results)
