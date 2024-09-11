@@ -1,70 +1,61 @@
+import argparse
 import csv
 from torch import cuda, bfloat16
 import transformers
 
-print("Starting script...")
+def main(input_dataset, temperature):
+    model_id = 'medalpaca/medalpaca-13b'
 
-model_id = 'medalpaca/medalpaca-13b'
-print(f"Model ID set to {model_id}")
+    device = f'cuda:{cuda.current_device()}' if cuda.is_available() else 'cpu'
 
-device = f'cuda:{cuda.current_device()}' if cuda.is_available() else 'cpu'
-print(f"Device set to {device}")
+    bnb_config = transformers.BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_quant_type='nf4',
+        bnb_4bit_use_double_quant=True,
+        bnb_4bit_compute_dtype=bfloat16
+    )
 
-# Set quantization configuration to load large model with less GPU memory
-bnb_config = transformers.BitsAndBytesConfig(
-    load_in_4bit=True,
-    bnb_4bit_quant_type='nf4',
-    bnb_4bit_use_double_quant=True,
-    bnb_4bit_compute_dtype=bfloat16
-)
-print("Quantization configuration set.")
+    hf_auth = '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'
 
-# Begin initializing HF items, using the provided auth token
-hf_auth = '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'
-print("HF auth token set.")
+    model_config = transformers.AutoConfig.from_pretrained(
+        model_id,
+        use_auth_token=hf_auth
+    )
 
-model_config = transformers.AutoConfig.from_pretrained(
-    model_id,
-    use_auth_token=hf_auth
-)
-print("Model configuration loaded.")
+    model = transformers.AutoModelForCausalLM.from_pretrained(
+        model_id,
+        trust_remote_code=True,
+        config=model_config,
+        quantization_config=bnb_config,
+        device_map='auto',
+        use_auth_token=hf_auth
+    )
+    model.eval()
 
-model = transformers.AutoModelForCausalLM.from_pretrained(
-    model_id,
-    trust_remote_code=True,
-    config=model_config,
-    quantization_config=bnb_config,
-    device_map='auto',
-    use_auth_token=hf_auth
-)
-model.eval()
-print(f"Model loaded on {device}")
+    tokenizer = transformers.AutoTokenizer.from_pretrained(
+        model_id,
+        use_auth_token=hf_auth
+    )
 
-tokenizer = transformers.AutoTokenizer.from_pretrained(
-    model_id,
-    use_auth_token=hf_auth
-)
-print("Tokenizer loaded.")
+    # Select dataset based on input argument
+    if input_dataset == "TREC":
+        input_file = '../data/TRECLiveQA.csv'
+    elif input_dataset == "medquad":
+        input_file = '../data/MedQuAD.csv'
+    else:
+        raise ValueError("Invalid input dataset. Choose 'TREC' or 'medquad'.")
 
-# Define the input file path
-input_file = '/local/scratch/ydiekma/PatientFacingLLM-Eval/questions_rephrased_temp_0.6_missingrows.csv'
-
-# Iterate through the temperatures and run the script
-for temperature in [0.6, 0.5, 0.4, 0.3, 0.2, 0.1]:
-    output_file = f'/local/scratch/ydiekma/PatientFacingLLM-Eval/missing_rows/medalpaca_temp_{temperature}.csv'
-    # Create the text generation pipeline with the current temperature
+    output_file = f'medalpaca_temp_{temperature}.csv'
     pl = transformers.pipeline(
         model=model, tokenizer=tokenizer,
         do_sample=True,
-        return_full_text=True,  # Return the full text
+        return_full_text=True, 
         task='text-generation',
-        temperature=temperature,  # Set the current temperature
-        max_new_tokens=512,  # Max number of tokens to generate in the output
+        temperature=temperature,  
+        max_new_tokens=512, 
         device_map='auto'
     )
-    print(f"Text generation pipeline created for temperature {temperature}.")
 
-    # Open the input CSV file and process each question
     with open(input_file, mode='r', newline='') as infile, open(output_file, mode='w', newline='') as outfile:
         reader = csv.DictReader(infile)
         fieldnames = [
@@ -88,13 +79,11 @@ for temperature in [0.6, 0.5, 0.4, 0.3, 0.2, 0.1]:
                 response = pl(input_text)
                 generated_text = response[0]["generated_text"].strip()
                 
-                # Remove the input text from the generated answer
                 answer_start = generated_text.find("Answer: ") + len("Answer: ")
                 answer = generated_text[answer_start:].strip()
                 
                 responses.append(answer)
             
-            # Write the responses to the output CSV file
             writer.writerow({
                 f'medalpaca-13b_answer_original': responses[0],
                 f'medalpaca-13b_answer_v1': responses[1],
@@ -104,5 +93,10 @@ for temperature in [0.6, 0.5, 0.4, 0.3, 0.2, 0.1]:
                 f'medalpaca-13b_answer_v5': responses[5],
             })
 
-print("Script finished.")
-
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Run MedAlpaca-13B model on dataset with specific temperature.')
+    parser.add_argument('input_dataset', choices=['TREC', 'medquad'], help='The name of the input dataset to use ("TREC" or "medquad").')
+    parser.add_argument('temperature', type=float, help='The temperature to use for text generation.')
+    
+    args = parser.parse_args()
+    main(args.input_dataset, args.temperature)
