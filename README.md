@@ -2,19 +2,6 @@
 
 This repository contains the code and instructions to reproduce the experiments presented in the paper "Evaluating Safety of Large Language Models for Patient-facing Medical Question Answering."
 
-## Table of Contents
-- [Requirements](#requirements)
-- [Datasets](#datasets)
-- [Code Execution Steps](#code-execution-steps)
-  - [Step 1: Download Datasets](#step-1-download-datasets)
-  - [Step 2: Rephrase Questions](#step-2-rephrase-questions)
-  - [Step 3: Model Answer Generation](#step-3-model-answer-generation)
-    - [Running Model Scripts](#running-model-scripts)
-- [Benchmark](#benchmark)
-  - [Running Benchmark Scripts](#running-benchmark-scripts)
-
----
-
 ## Requirements
 The required packages to run this code are listed in:
 ```bash
