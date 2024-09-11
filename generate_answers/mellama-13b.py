@@ -43,10 +43,10 @@ print("MODEL PREFIX: ", dataset_prefix)
 Before running this script, first download models on GPU server:
 
 1. To only get MeLLaMA-13B-chat:
-wget -r -N -c -np --user cfensor --ask-password https://physionet.org/files/me-llama/1.0.0/MeLLaMA-13B-chat/
+wget -r -N -c -np --user <your-physionet-username> --ask-password https://physionet.org/files/me-llama/1.0.0/MeLLaMA-13B-chat/
 
 2. To only get MeLLaMA-70B-chat:
-wget -r -N -c -np --user cfensor --ask-password https://physionet.org/files/me-llama/1.0.0/MeLLaMA-70B-chat/
+wget -r -N -c -np --user <your-physionet-username> --ask-password https://physionet.org/files/me-llama/1.0.0/MeLLaMA-70B-chat/
 
 How to run: python mellama-13b.py 0.6 TREC
 """
