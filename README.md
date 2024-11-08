@@ -24,6 +24,9 @@ Make sure to place the downloaded datasets into their respective directories bef
 ```
 The column header for the answers should be "answer" and for the questions "question".
 
+Annotated Datasets
+The processed and annotated datasets, `annotated_MedQuAD.csv` and `annotated_TRECLiveQA.csv`, are also saved in the `data` folder.
+
 
 ## Code Execution Steps
 
