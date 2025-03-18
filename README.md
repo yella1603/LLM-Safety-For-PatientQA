@@ -136,6 +136,7 @@ Both benchmark scripts expect the input files to be present in the `../output/an
 - For questions: Similar format but using the rephrased question files.
 
 
+## Citation
 
 If you find this repository valuable for your research, we kindly request that you acknowledge our paper by citing the follwing paper. We appreciate your consideration.
 ```
