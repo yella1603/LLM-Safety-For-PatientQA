@@ -1,6 +1,6 @@
 # Evaluating Safety of Large Language Models for Patient-facing Medical Question Answering
 
-Supplemental code: "Evaluating Safety of Large Language Models for Patient-facing Medical Question Answering."
+This is the code for our paper "Evaluating Safety of Large Language Models for Patient-facing Medical Question Answering." in Proceedings of the 4th Machine Learning for Health Symposium, PMLR.
 
 ## Requirements
 The required packages to run this code are listed in:
@@ -134,3 +134,28 @@ Each script will generate an output CSV file named according to the model and te
 Both benchmark scripts expect the input files to be present in the `../output/answer_results` directory, with names formatted as follows:
 - For answers: `TREC_{modelname}_temp_{temp}.csv` or `MedQuAD_{modelname}_temp_{temp}.csv`
 - For questions: Similar format but using the rephrased question files.
+
+
+
+If you find this repository valuable for your research, we kindly request that you acknowledge our paper by citing the follwing paper. We appreciate your consideration.
+```
+@InProceedings{pmlr-v259-diekmann25a,
+  title = 	 {Evaluating Safety of Large Language Models for Patient-facing Medical Question Answering},
+  author =       {Diekmann, Yella and Fensore, Chase M and Carrillo-Larco, Rodrigo M and Pradhan, Nishant and Appana, Bhavya and Ho, Joyce C},
+  booktitle = 	 {Proceedings of the 4th Machine Learning for Health Symposium},
+  pages = 	 {267--290},
+  year = 	 {2025},
+  editor = 	 {Hegselmann, Stefan and Zhou, Helen and Healey, Elizabeth and Chang, Trenton and Ellington, Caleb and Mhasawade, Vishwali and Tonekaboni, Sana and Argaw, Peniel and Zhang, Haoran},
+  volume = 	 {259},
+  series = 	 {Proceedings of Machine Learning Research},
+  month = 	 {15--16 Dec},
+  publisher =    {PMLR},
+  pdf = 	 {https://raw.githubusercontent.com/mlresearch/v259/main/assets/diekmann25a/diekmann25a.pdf},
+  url = 	 {https://proceedings.mlr.press/v259/diekmann25a.html},
+  abstract = 	 {Large language models (LLMs) have revolutionized the question answering (QA) domain by achieving near-human performance across a broad range of tasks. Recent studies have suggested LLMs are capable of answering clinical questions and providing medical advice. Although LLMs’ answers must be reliable and safe, existing evaluations of medical QA systems often only focus on the accuracy of the content. However, a critical, underexplored aspect is whether variations in patient inquiries - rephrasing the same question - lead to inconsistent or unsafe LLM responses. We propose a new evaluation methodology leveraging synthetic question generation to rigorously assess the safety of LLMs in patient-facing medical QA. In benchmarking 8 LLMs, we observe a weak correlation between standard automated quality metrics and human evaluations, underscoring the need for enhanced sensitivity analysis in evaluating patient medical QA safety.}
+}
+```
+
+
+
+
